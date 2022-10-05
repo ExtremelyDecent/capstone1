@@ -10,6 +10,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = ('postgresql:///riotchallenges')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 API_BASE_URL = "americas.api.riotgames.com"
+API_CHALLENGE_BASE_URL = "https://na1.api.riotgames.com/lol/challenges/v1/challenges/"
 champion_list = []
 challenge_list = []
 
@@ -28,7 +29,7 @@ def show_champions():
 @app.route('/champions/get')
 def get_champions():
     res = requests.get("http://ddragon.leagueoflegends.com/cdn/12.18.1/data/en_US/champion", 
-        params={"term": "champions"})
+        params={ "X-Riot-Token": f"{API_SECRET_KEY}"})
     for champion in res.data:
         champion_list.push(champion)
         add_champion(champion.name, f"/static/img/tiles/{champion.id}_0.jpg")
@@ -42,8 +43,9 @@ def show_challenges():
 
 @app.route('/challenges/get')
 def get_challenges():
-    res = requests.get(f"{API_BASE_URL}/lol/challenges/v1/challenges/config")
+    res = requests.get(f"{API_CHALLENGE_BASE_URL}/config", params={ "X-Riot-Token": f"{API_SECRET_KEY}"})
     challenge = res.data
-    add_challenge()
+    add_challenge(challenge.)
     
     return redirect('/challenges')
+    
