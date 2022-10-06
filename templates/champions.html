@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row">
+          
+        {% for champion in champions %}
+            <div class="col-2 champion">
+                <img src="{{ champion.champion_image_url }}" alt="" class="champion-image">
+                <a href="/champion/{{ champion.champion_id}}">{{ champion.champion_name }}</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
