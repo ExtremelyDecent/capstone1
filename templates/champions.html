@@ -3,9 +3,9 @@
     <div class="row">
           
         {% for champion in champions %}
-            <div class="col-2 champion">
+            <div class="col-1 champion">
                 <img src="{{ champion.champion_image_url }}" alt="" class="champion-image">
-                <a href="/champion/{{ champion.champion_id}}">{{ champion.champion_name }}</a>
+                <a href="/champion/{{ champion.champion_id}}" class="champion-name">{{ champion.champion_name }}</a>
             </div>
         {% endfor %}
     </div>

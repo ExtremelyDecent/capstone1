@@ -104,8 +104,12 @@ nav form.navbar-form {
   align-self: auto;
   justify-self:center;
 }
-.champion-img{
+.champion-image{
   align-self: auto;
   justify-self:center;
-  size-adjust: 50%;
+  width: 5em;
+  border-radius: 12em;
+}
+.champion-name{
+  justify-self: center;
 }

@@ -14,7 +14,7 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['FLASK_DEBUG'] = True
 API_BASE_URL = "americas.api.riotgames.com"
 JSON_LEAGUE_VERSION = '12.19.1'
-API_CHALLENGE_BASE_URL = "https://na1.api.riotgames.com/lol/challenges/v1/challenges/"
+API_CHALLENGE_BASE_URL = "https://na1.api.riotgames.com/lol/challenges/v1/challenges/config"
 champion_list = []
 challenge_list = []
 
@@ -54,12 +54,20 @@ def get_champions():
 @app.route('/challenges')
 def show_challenges():
     
+    
     return render_template("challenges.html", challenges = challenge_list)
 
-@app.route('/challenges/get')
+@app.route('/challenges/populate')
 def get_challenges():
-    res = requests.get(f"{API_CHALLENGE_BASE_URL}/config", params={ "X-Riot-Token": f"{API_SECRET_KEY}"})
-    challenge = res.data
+    res = requests.get(f"{API_CHALLENGE_BASE_URL}?api_key={API_SECRET_KEY}")
+    challenges = res.json()
+    for challenge in challenges:
+        challenge_id = challenge['id']
+        challenge_name = challenge['localizedNames']['en_US']['name']
+        challenge_description = challenge['localizedNames']['en_US']['description']
+        challenge_image = f"/static/img/challenge_tiles/{challenge_id}-BRONZE"
+        
+        print(f"{challenge_id} - {challenge_name} - {challenge_description}" )
     # add_challenge(challenge.)
     
     return redirect('/challenges')

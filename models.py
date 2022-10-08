@@ -134,12 +134,19 @@ class Tier(db.Model):
     )
     tier_image_url = db.Column(
         db.Text,
-        nullable = False,
+        # nullable = False,
     )
     tier_xp_max = db.Column(
         db.Integer,
-        nullable = False
+        # nullable = False
     )
+    @classmethod
+    def add_tier(cls, tier_name:
+        tier = Tier(
+            tier_name = tier_name,
+            # challenge_image_url = challenge_image_url
+        )
+        db.session.add(challenge)
 class Role(db.Model):
     """Challenge tiers"""
     __tablename__ = "roles"

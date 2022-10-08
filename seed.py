@@ -2,16 +2,14 @@ from app import db
 from models import Champion, Tier, Region, Challenge, Map
 db.drop_all()
 db.create_all()
-
-res = requests.get(f"http://ddragon.leagueoflegends.com/cdn/{JSON_LEAGUE_VERSION}/data/en_US/champion.json")
-
-champions = res.json()
-print(champions['data'])
-for champion in champions['data']:
-    
-    champion_name = champions['data'][f"{champion}"]['name']
-    print(champion_name)
-    Champion.add_champion(champion_name, f"/static/img/tiles/{champion}_0.jpg")
-
+db.session.add_tier("IRON")
+db.session.add_tier("BRONZE")
+db.session.add_tier("SILVER")
+db.session.add_tier("GOLD")
+db.session.add_tier("PLATINUM")
+db.session.add_tier("DIAMOND")
+db.session.add_tier("MASTER")
+db.session.add_tier("GRANDMASTER")
+db.session.add_tier("CHALLENGER")
 db.session.commit()
 
