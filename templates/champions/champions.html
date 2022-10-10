@@ -5,7 +5,7 @@
         {% for champion in champions %}
             <div class="col-1 champion">
                 <img src="{{ champion.champion_image_url }}" alt="" class="champion-image">
-                <a href="/champion/{{ champion.champion_id}}" class="champion-name">{{ champion.champion_name }}</a>
+                <a href="/champions/{{ champion.champion_id}}" class="champion-name">{{ champion.champion_name }}</a>
             </div>
         {% endfor %}
     </div>

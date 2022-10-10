@@ -56,13 +56,16 @@ class Challenge(db.Model):
         nullable = False,
         unique = True  
     )
+    challenge_description = db.Column(
+        db.Text,
+    )
     # challenge_region_id = db.Column(
     #     db.Integer,
     #     db.ForeignKey('regions.region_id', ondelete = 'cascade')
     # )
     challenge_image_url = db.Column(
         db.Text,
-        nullable = False,
+        # nullable = False,
     )
     # challenge_role_id = db.Column(
     #     db.Integer,
@@ -78,7 +81,7 @@ class Challenge(db.Model):
     # )
 
     @classmethod
-    def add_challenge(cls, challenge_name, challenge_image_url):
+    def add_challenge(cls, challenge_name, challenge_id):
         challenge = Challenge(
             challenge_name = challenge_name,
             challenge_image_url = challenge_image_url
@@ -121,7 +124,7 @@ class Map(db.Model):
 
 class Tier(db.Model):
     """Challenge tiers"""
-    __tablename__ = "tier"
+    __tablename__ = "tiers"
 
     tier_id = db.Column(
         db.Integer,
@@ -141,12 +144,12 @@ class Tier(db.Model):
         # nullable = False
     )
     @classmethod
-    def add_tier(cls, tier_name:
+    def add_tier(cls, tier_name):
         tier = Tier(
             tier_name = tier_name,
             # challenge_image_url = challenge_image_url
         )
-        db.session.add(challenge)
+        db.session.add(tier)
 class Role(db.Model):
     """Challenge tiers"""
     __tablename__ = "roles"

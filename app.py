@@ -22,6 +22,16 @@ connect_db(app)
 @app.route('/create')
 def create():
     db.create_all()
+    db.session.add_tier("IRON")
+    db.session.add_tier("BRONZE")
+    db.session.add_tier("SILVER")
+    db.session.add_tier("GOLD")
+    db.session.add_tier("PLATINUM")
+    db.session.add_tier("DIAMOND")
+    db.session.add_tier("MASTER")
+    db.session.add_tier("GRANDMASTER")
+    db.session.add_tier("CHALLENGER")
+    db.session.commit()
     return 'tables created'
 
 
@@ -35,7 +45,7 @@ def show_homepage():
 def show_champions():
     champions = Champion.query.all()
     
-    return render_template("champions.html", champions = champions)
+    return render_template("champions/show.html", champions = champions)
 
 @app.route('/champions/populate')
 def get_champions():
@@ -50,13 +60,24 @@ def get_champions():
         Champion.add_champion(champion_name, f"/static/img/tiles/{champion}_0.jpg")
     db.session.commit()
     return redirect('/champions')
+@app.route('/champions/<champion_id>')
+def show_champion_details(challenge_id):
+    champion = Champion.query.get(champion_id)
+
+    return render_template("champions/details.html")
+
 
 @app.route('/challenges')
 def show_challenges():
+    challenges = Challenge.query.all()
     
-    
-    return render_template("challenges.html", challenges = challenge_list)
+    return render_template("challenges.html", challenges = challenges)
+@app.route('/challenges/<challenge_id>')
+def show_challenge_details(challenge_id):
+    challenge = Challenge.query.get(challenge_id)
 
+    return render_template("challenges/details.html")
+    
 @app.route('/challenges/populate')
 def get_challenges():
     res = requests.get(f"{API_CHALLENGE_BASE_URL}?api_key={API_SECRET_KEY}")
@@ -65,9 +86,10 @@ def get_challenges():
         challenge_id = challenge['id']
         challenge_name = challenge['localizedNames']['en_US']['name']
         challenge_description = challenge['localizedNames']['en_US']['description']
-        challenge_image = f"/static/img/challenge_tiles/{challenge_id}-BRONZE"
-        
-        print(f"{challenge_id} - {challenge_name} - {challenge_description}" )
+        # challenge_image = f"/static/img/challenge_tiles/{challenge_id}-BRONZE"
+        print(f"{challenge_id} - {challenge_name} - {challenge_description}")
+        # Challenge.add_challenge(parseInt(challenge_id), challenge_name, challenge_description)
+
     # add_challenge(challenge.)
     
     return redirect('/challenges')
